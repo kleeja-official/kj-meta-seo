@@ -20,7 +20,7 @@ $kleeja_plugin['kj_meta_seo']['information'] = array(
     # who wrote this plugin?
     'plugin_developer' => 'kleeja.com',
     # this plugin version
-    'plugin_version' => '1.0',
+    'plugin_version' => '1.0.1',
     # explain what is this plugin, why should i use it?
     'plugin_description' => array(
         'en' => 'Meta fields plugin to enhance SEO for Kleeja',
@@ -195,7 +195,7 @@ $kleeja_plugin['kj_meta_seo']['functions'] = array(
 if (!function_exists('kj_meta_seo_out')) {
     function kj_meta_seo_out($in = '')
     {
-        global $config, $title;
+        global $config, $title, $titlee, $file_info;
 
 
         if($in == 'download' && $config['kj_meta_seo_enable_download_auto_meta'] == 0){
@@ -223,9 +223,17 @@ if (!function_exists('kj_meta_seo_out')) {
                 break;
 
 
+            case 'download':
+
+                $desc = (isset($file_info['about']) && !empty($file_info['about'])) ? $file_info['about'] : $title;
+                $keywords = implode(', ', kj_meta_seo_keywords_extract($title));
+
+                break;
+
+
             default:
 
-                $desc = $title;
+                $desc = $title = ($titlee ?? $config['sitename']);
                 $keywords = implode(', ', kj_meta_seo_keywords_extract($title));
 
                 break;
@@ -278,6 +286,6 @@ if (!function_exists('kj_meta_seo_out')) {
 if (!function_exists('kj_meta_seo_keywords_extract')) {
     function kj_meta_seo_keywords_extract($string = '')
     {
-        return array_filter(preg_split("!\W!", $string));
+        return array_filter(preg_split("!\W!", $string ?? ''));
     }
 }
