@@ -249,7 +249,7 @@ if (!function_exists('kj_meta_seo_out')) {
                 '<meta property="og:image" content="' . $included_image . '">',
                 '<meta property="og:url" content="' . $actual_link . '">',
                 '<meta property="og:site_name" content="' . $config['sitename'] . '">',
-                '<meta property="og:description" content="' . htmlspecialchars($desc) . '">'
+                '<meta property="og:description" content="' . htmlspecialchars($desc ?? "") . '">'
             );
 
             $metas = array_merge($metas, $facebook_meta);
@@ -259,7 +259,7 @@ if (!function_exists('kj_meta_seo_out')) {
             $twitter_meta = array(
                 '<meta name="twitter:card" content="summary">',
                 '<meta name="twitter:title" content="'.  $title .'">',
-                '<meta name="twitter:description" content="' . htmlspecialchars($desc) . '">',
+                '<meta name="twitter:description" content="' . htmlspecialchars($desc ?? "") . '">',
                 '<meta name="twitter:image" content="' . $included_image . '">',
             );
 
@@ -278,6 +278,6 @@ if (!function_exists('kj_meta_seo_out')) {
 if (!function_exists('kj_meta_seo_keywords_extract')) {
     function kj_meta_seo_keywords_extract($string = '')
     {
-        return array_filter(preg_split("!\W!", $string));
+        return array_filter(preg_split("!\W!", $string ?? ""));
     }
 }
